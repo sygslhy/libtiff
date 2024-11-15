@@ -161,13 +161,13 @@ target_link_libraries(${TARGET} PUBLIC z)
 # specify where the public headers of this library are
 target_include_directories(
     tiff
-    PUBLIC $<BUILD_INTERFACE:${PUBLIC_HDR_DIR}> $<BUILD_INTERFACE:${CONF_HDR_DIR}> $<INSTALL_INTERFACE:include>
+    PUBLIC $<BUILD_INTERFACE:${PUBLIC_HDR_DIR}/libtiff> $<BUILD_INTERFACE:${CONF_HDR_DIR}> $<INSTALL_INTERFACE:include>
     PRIVATE ${PRIVATE_HDR_DIR}
 )
 
 
 if(CXX_SUPPORT)
-  set(tiffxx_HEADERS ${SRC_DIR}/tif_stream.cxx)
+  set(tiffxx_HEADERS ${PUBLIC_HDR_DIR}/libtiff/tiffio.hxx)
 
   # No .def file for this library.
   if (WIN32 AND NOT MINGW)
@@ -181,7 +181,8 @@ if(CXX_SUPPORT)
   target_sources(tiffxx PRIVATE
           ${tiffxx_HEADERS}
           ${SRC_DIR}/tif_stream.cxx)
-  target_link_libraries(tiffxx tiff)
+  target_link_libraries(tiffxx PUBLIC tiff)
+  target_include_directories(tiffxx INTERFACE ${PUBLIC_HDR_DIR}/libtiff)
   set_target_properties(tiffxx PROPERTIES SOVERSION ${SO_COMPATVERSION})
   if(NOT CYGWIN)
     # This property causes shared libraries on Linux to have the full version
@@ -196,5 +197,3 @@ if(CXX_SUPPORT)
   endif()
 
 endif()
-
-
