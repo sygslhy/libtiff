@@ -195,16 +195,6 @@ if(CXX_SUPPORT)
                           "-Wl,--version-script=${SRC_DIR}/libtiffxx.map")
   endif()
 
-
-  install(TARGETS tiffxx
-          RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
-          LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
-          ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR})
-
 endif()
 
-install(TARGETS ${TARGET} 
-        LIBRARY DESTINATION lib
-        PUBLIC_HEADER DESTINATION include
-        RUNTIME DESTINATION bin)
 
