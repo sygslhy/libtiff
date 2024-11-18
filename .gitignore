@@ -74,3 +74,4 @@ test/*.log
 test/*.trs
 test/o-*
 *~
+build/*
